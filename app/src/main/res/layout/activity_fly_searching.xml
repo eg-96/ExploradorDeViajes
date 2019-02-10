@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FlySearching">
@@ -169,215 +170,224 @@
         app:layout_constraintStart_toEndOf="@+id/returnLink"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/wrapFlight"
         android:layout_width="0dp"
-        android:layout_height="164dp"
+        android:layout_height="wrap_content"
         android:background="#fff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/scrollView3"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/flyConditionFly1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Direct"
+            android:textColor="#252033"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/departureTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="7:00 AM"
-        android:textColor="#252033"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/scrollView2"
-        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+        <TextView
+            android:id="@+id/destinationTimeFly2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:text="8:32 AM"
+            android:textColor="#252033"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/textView14"
+            app:layout_constraintTop_toBottomOf="@+id/airlineFly1" />
 
-    <TextView
-        android:id="@+id/departureTimeFly2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="22dp"
-        android:text="7:00 AM"
-        android:textColor="#252033"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/scrollView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="-"
+            android:textColor="#252033"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/departureTime"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/destinationTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="8:32 AM"
-        android:textColor="#252033"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="3dp"
+            android:text="-"
+            android:textColor="#524C61"
+            app:layout_constraintStart_toEndOf="@+id/departureCodeFly1"
+            app:layout_constraintTop_toBottomOf="@+id/departureTime" />
 
-    <TextView
-        android:id="@+id/destinationTimeFly2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:text="8:32 AM"
-        android:textColor="#252033"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/airlineFly1" />
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="2dp"
+            android:text="-"
+            android:textColor="#524C61"
+            app:layout_constraintStart_toEndOf="@+id/departureCodeFly2"
+            app:layout_constraintTop_toTopOf="@+id/departureCodeFly2" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:text="-"
-        android:textColor="#252033"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/departureTime"
-        app:layout_constraintTop_toTopOf="@+id/scrollView2" />
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:text="-"
+            android:textColor="#252033"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/departureTimeFly2"
+            app:layout_constraintTop_toBottomOf="@+id/airlineFly1" />
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:text="-"
-        android:textColor="#252033"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/departureTimeFly2"
-        app:layout_constraintTop_toBottomOf="@+id/airlineFly1" />
+        <TextView
+            android:id="@+id/departureCodeFly2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="SJO"
+            android:textColor="#524C61"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/departureTimeFly2" />
 
-    <TextView
-        android:id="@+id/flyConditionFly1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Direct"
-        android:textColor="#252033"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
-        app:layout_constraintTop_toTopOf="@+id/scrollView2" />
+        <TextView
+            android:id="@+id/destinationTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="8:32 AM"
+            android:textColor="#252033"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/flyConditionFly2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:text="Direct"
-        android:textColor="#252033"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
-        app:layout_constraintTop_toBottomOf="@+id/Fly1Duration" />
+        <TextView
+            android:id="@+id/flyConditionFly2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Direct"
+            android:textColor="#252033"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Fly1Duration" />
 
-    <TextView
-        android:id="@+id/departureCodeFly1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="2dp"
-        android:text="SJO"
-        android:textColor="#524C61"
-        app:layout_constraintStart_toStartOf="@+id/scrollView2"
-        app:layout_constraintTop_toBottomOf="@+id/departureTime" />
+        <TextView
+            android:id="@+id/departureCodeFly1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:text="SJO"
+            android:textColor="#524C61"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/departureTime" />
 
-    <TextView
-        android:id="@+id/departureCodeFly2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="2dp"
-        android:text="SJO"
-        android:textColor="#524C61"
-        app:layout_constraintStart_toStartOf="@+id/scrollView2"
-        app:layout_constraintTop_toBottomOf="@+id/departureTimeFly2" />
+        <TextView
+            android:id="@+id/departureTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="7:00 AM"
+            android:textColor="#252033"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="3dp"
-        android:text="-"
-        android:textColor="#524C61"
-        app:layout_constraintStart_toEndOf="@+id/departureCodeFly1"
-        app:layout_constraintTop_toBottomOf="@+id/departureTime" />
+        <TextView
+            android:id="@+id/departureTimeFly2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="22dp"
+            android:text="7:00 AM"
+            android:textColor="#252033"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="2dp"
-        android:text="-"
-        android:textColor="#524C61"
-        app:layout_constraintStart_toEndOf="@+id/departureCodeFly2"
-        app:layout_constraintTop_toTopOf="@+id/departureCodeFly2" />
+        <TextView
+            android:id="@+id/destinationCodeFly1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="2dp"
+            android:text="GUA"
+            android:textColor="#524C61"
+            app:layout_constraintStart_toEndOf="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/destinationTime" />
 
-    <TextView
-        android:id="@+id/destinationCodeFly1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="2dp"
-        android:text="GUA"
-        android:textColor="#524C61"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/destinationTime" />
+        <TextView
+            android:id="@+id/Fly1Duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:text="1h 32m"
+            android:textColor="#524C61"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flyConditionFly1" />
 
-    <TextView
-        android:id="@+id/destinationCodeFly2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="4dp"
-        android:text="GUA"
-        android:textColor="#524C61"
-        app:layout_constraintStart_toEndOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/destinationTimeFly2" />
+        <TextView
+            android:id="@+id/fly2Duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:text="1h 32m"
+            android:textColor="#524C61"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flyConditionFly2" />
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="2dp"
-        android:text=","
-        android:textColor="#524C61"
-        app:layout_constraintStart_toEndOf="@+id/destinationCodeFly1"
-        app:layout_constraintTop_toBottomOf="@+id/destinationTime" />
+        <TextView
+            android:id="@+id/airlineFly1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="2dp"
+            android:text="AVIANCA"
+            android:textColor="#524C61"
+            app:layout_constraintStart_toEndOf="@+id/destinationCodeFly1"
+            app:layout_constraintTop_toBottomOf="@+id/destinationTime" />
 
-    <TextView
-        android:id="@+id/airlineFly1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="2dp"
-        android:text="AVIANCA"
-        android:textColor="#524C61"
-        app:layout_constraintStart_toEndOf="@+id/destinationCodeFly1"
-        app:layout_constraintTop_toBottomOf="@+id/destinationTime" />
+        <TextView
+            android:id="@+id/destinationCodeFly2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="GUA"
+            android:textColor="#524C61"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView15"
+            app:layout_constraintTop_toBottomOf="@+id/departureTimeFly2" />
 
-    <TextView
-        android:id="@+id/Fly1Duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="16dp"
-        android:text="1h 32m"
-        android:textColor="#524C61"
-        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
-        app:layout_constraintTop_toBottomOf="@+id/flyConditionFly1" />
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="2dp"
+            android:text=","
+            android:textColor="#524C61"
+            app:layout_constraintStart_toEndOf="@+id/destinationCodeFly1"
+            app:layout_constraintTop_toBottomOf="@+id/destinationTime" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

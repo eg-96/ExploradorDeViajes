@@ -1,9 +1,11 @@
 package com.example.exploradordeviajes;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,6 +34,9 @@ public class FlySearching extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("Data", document.getId() + " => " + document.getData());
+
+                                ConstraintLayout flightWrapper = (ConstraintLayout)findViewById(R.id.wrapFlight);
+
                             }
                         } else {
                             Log.w("Error", "Error getting documents.", task.getException());
