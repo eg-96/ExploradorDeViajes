@@ -21,8 +21,9 @@ import retrofit2.http.POST;
 public class Register extends AppCompatActivity {
     private TextView mResponseTv;
     private RegisterService registerService;
-    public static final String BASE_URL = "http://192.168.100.116:3000/api/register/";
+    public static final String BASE_URL = "http://192.168.100.9:8080";
     private static final String TAG = "Register activity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

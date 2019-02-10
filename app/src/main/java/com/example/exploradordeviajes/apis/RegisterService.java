@@ -14,7 +14,7 @@ import retrofit2.http.POST;
 public interface RegisterService {
 
     //Specify the request type and pass the relative URL//
-    @POST("/register")
+    @POST("/api/register")
     // This will indicate that the request will have its MIME
     // type (a header field that identifies the format of the body of an HTTP
     // request or response) set to application/x-www-form-urlencoded and also
