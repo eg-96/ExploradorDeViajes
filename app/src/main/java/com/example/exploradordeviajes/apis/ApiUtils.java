@@ -4,8 +4,14 @@ public class ApiUtils {
 
     private ApiUtils() {}
 
-    public static RegisterService getAPIService(String BASE_URL) {
+    public static RegisterService getAPIService() {
 
-        return RetroFitClient.getRetrofitInstance(BASE_URL).create(RegisterService.class);
+        return RetroFitClient.getRetrofitInstance().create(RegisterService.class);
     }
 }
+
+
+
+
+
+

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.exploradordeviajes.Modelos.Users;
 import com.example.exploradordeviajes.apis.ApiUtils;
@@ -21,7 +22,6 @@ import retrofit2.http.POST;
 public class Register extends AppCompatActivity {
     private TextView mResponseTv;
     private RegisterService registerService;
-    public static final String BASE_URL = "http://192.168.100.9:8080";
     private static final String TAG = "Register activity";
 
     @Override
@@ -33,7 +33,7 @@ public class Register extends AppCompatActivity {
         final EditText passwordET = (EditText)findViewById(R.id.password);
         Button submitBtn = (Button) findViewById(R.id.registrarse);
 
-        registerService = ApiUtils.getAPIService(BASE_URL);
+        registerService = ApiUtils.getAPIService();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,37 +42,44 @@ public class Register extends AppCompatActivity {
                 String password = passwordET.getText().toString().trim();
                 if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     Users user = new Users(email,password);
-                    registerUser(email,password);
+                    registerUser(user);
                 }
             }
         });
     }
 
-    public void registerUser(String email, String password) {
+    public void registerUser(Users user) {
+
         // asynchronously sends the request and notifies
-        registerService.registerUser(email,password).enqueue(new Callback<Users>() {
+        registerService.registerUser(user).enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
 
                 if(response.isSuccessful()) {
-                    showResponse(response.body().toString());
+                    showResponse(response);
+                    Toast.makeText(getApplicationContext(),"This is my toast message",Toast.LENGTH_LONG).show();// Set your own toast  message
                     Log.i(TAG, "post submitted to API." + response.body().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<Users> call, Throwable t) {
+                showBadResponse(t);
                 Log.e(TAG, t.getMessage());
                 Log.e(TAG, "Unable to submit post to API.");
             }
         });
     }
 
-    public void showResponse(String response) {
-        if(mResponseTv.getVisibility() == View.GONE) {
-            mResponseTv.setVisibility(View.VISIBLE);
-        }
-        mResponseTv.setText(response);
+    public void showResponse(Response<Users> response) {
+        System.out.println("================ Response ==================");
+        System.out.println(response);
+        System.out.println("==================================");
+    }
+    public void showBadResponse(Throwable response) {
+        System.out.println("================BAD Response ==================");
+        System.out.println(response);
+        System.out.println("==================================");
     }
 
 }
