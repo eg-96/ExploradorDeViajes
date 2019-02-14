@@ -10,10 +10,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.exploradordeviajes.Helpers.ApiError;
+import com.example.exploradordeviajes.Helpers.ErrorsUtils;
 import com.example.exploradordeviajes.Modelos.Users;
 import com.example.exploradordeviajes.apis.ApiUtils;
 import com.example.exploradordeviajes.apis.RegisterService;
+import com.example.exploradordeviajes.apis.RetroFitClient;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,12 +59,15 @@ public class Register extends AppCompatActivity {
         // asynchronously sends the request and notifies
         registerService.registerUser(user).enqueue(new Callback<Users>() {
             @Override
-            public void onResponse(Call<Users> call, Response<Users> response) {
+            public void onResponse(Call call, Response response) {
 
                 if(response.isSuccessful()) {
-                    showResponse(response);
+                    showResponse(response.body());
                     Toast.makeText(getApplicationContext(),"This is my toast message",Toast.LENGTH_LONG).show();// Set your own toast  message
-                    Log.i(TAG, "post submitted to API." + response.body().toString());
+                    Log.i(TAG, "post submitted to API." + response.body());
+                }else{
+                    ApiError error = ErrorsUtils.parserError(response, RetroFitClient.getRetrofitInstance());
+                    Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();// Set your own toast  message
                 }
             }
 
@@ -71,7 +80,7 @@ public class Register extends AppCompatActivity {
         });
     }
 
-    public void showResponse(Response<Users> response) {
+    public void showResponse(Object response) {
         System.out.println("================ Response ==================");
         System.out.println(response);
         System.out.println("==================================");

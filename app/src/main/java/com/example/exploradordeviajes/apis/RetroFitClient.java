@@ -1,10 +1,6 @@
 package com.example.exploradordeviajes.apis;
 
-import android.content.Intent;
-import android.widget.Toast;
-
 import java.io.IOException;
-import java.util.logging.Level;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -13,9 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.support.v4.content.ContextCompat.startActivity;
-
-public class RetroFitClient {
+public class RetroFitClient extends Exception {
 
 
     private static Retrofit retrofit;
@@ -25,8 +19,20 @@ public static final String BASE_URL = "http://192.168.100.9:8080";
 //Create the Retrofit instance//
 
     public static Retrofit getRetrofitInstance() {
+        OkHttpClient okHttpClient = initOkHttpInterceptor();
+        if (retrofit == null) {
+            retrofit = new retrofit2.Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build(); //Build the Retrofit instance//
+        }
+        return retrofit;
+    }
+
+    public static OkHttpClient initOkHttpInterceptor() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-// set your desired log level
+        // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -42,7 +48,10 @@ public static final String BASE_URL = "http://192.168.100.9:8080";
 
                             return response;
                         }
-                        if (response.code() ==400) {
+                        if (response.code() == 400) {
+                            return response;
+                        }
+                        if (response.code() == 200) {
                             return response;
                         }
 
@@ -51,13 +60,6 @@ public static final String BASE_URL = "http://192.168.100.9:8080";
                 })
                 .build();
 
-        if (retrofit == null) {
-            retrofit = new retrofit2.Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(okHttpClient)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build(); //Build the Retrofit instance//
-        }
-        return retrofit;
+        return okHttpClient;
     }
 }
