@@ -45,13 +45,9 @@ public static final String BASE_URL = "http://192.168.100.9:8080";
 
                         // todo deal with the issues the way you need to
                         if (response.code() == 500) {
-
                             return response;
                         }
                         if (response.code() == 400) {
-                            return response;
-                        }
-                        if (response.code() == 200) {
                             return response;
                         }
 

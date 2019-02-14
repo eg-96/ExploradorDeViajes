@@ -26,4 +26,6 @@ public interface RegisterService {
 
 //   THIS WAY CAN BE USED ONLY IN A POST OR PUT
     Call<Users> registerUser(@Body Users user);
+    @POST("/api/login")
+    Call<Users> loginUser(@Body Users user);
 }
