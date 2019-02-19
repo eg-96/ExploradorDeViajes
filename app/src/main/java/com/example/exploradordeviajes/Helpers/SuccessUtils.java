@@ -9,13 +9,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class SuccessUtils {
-    public static ApiSuccess parserError(Response<?> response, Retrofit retrofitInstance){
+    public static ApiSuccess parserSuccess(Response<?> response, Retrofit retrofitInstance){
         Converter<ResponseBody, ApiSuccess> converter = retrofitInstance.responseBodyConverter(ApiSuccess.class, new Annotation[0]);
 
         ApiSuccess success;
 
         try{
-            success = converter.convert(response.errorBody());
+            success = converter.convert((ResponseBody) response.body());
         } catch (IOException e){
             return new ApiSuccess();
         }

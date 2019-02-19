@@ -4,6 +4,8 @@ import com.example.exploradordeviajes.Modelos.Users;
 
 import java.util.List;
 
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -27,5 +29,5 @@ public interface RegisterService {
 //   THIS WAY CAN BE USED ONLY IN A POST OR PUT
     Call<Users> registerUser(@Body Users user);
     @POST("/api/login")
-    Call<Users> loginUser(@Body Users user);
+    Call<ResponseBody> loginUser(@Body Users user);
 }

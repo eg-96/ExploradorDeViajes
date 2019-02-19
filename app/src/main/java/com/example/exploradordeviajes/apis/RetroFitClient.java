@@ -50,6 +50,9 @@ public static final String BASE_URL = "http://192.168.100.9:8080";
                         if (response.code() == 400) {
                             return response;
                         }
+                        if (response.code() == 200) {
+                            return response;
+                        }
 
                         return response;
                     }

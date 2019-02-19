@@ -1,4 +1,5 @@
-import firebase, { firestore } from 'firebase-admin';
+import firebase, { firestore, app } from 'firebase-admin';
+var jwt = require('jsonwebtoken');
 
 export const register = async (req, res) => {
   console.log(req.body);
@@ -30,17 +31,22 @@ export const log_in = async (req, res) => {
     await firebase.auth().getUserByEmail(user.email).then(response => {
       console.log("login");
       console.log(response);
+      const payload = {
+        check:  true
+      };
+      var token = jwt.sign(payload, process.env.SECRET_PASSWORD, {
+        expiresIn: 10 // expires in 24 hours
+      });
 
-      firebase.auth().createCustomToken(response.uid).then(customToken => {
-        return res.status(200).json({ error: false, message: "Se loggeo con exito", token: customToken });
-      }).catch(error => {
-        return res.status(400).json({ error: true, message: error });
-      })
+      console.log("token");
+      console.log(token);
+      return res.status(200).json({ error: false, message: "Login successfull", token: token });
+
     }).catch(error => {
       return res.status(400).json({ error: true, message: error });
     })
 
   } catch (error) {
-    return res.status(400).json({ error: true, message: error });
+    return res.status(500).json({ error: true, message: error });
   }
 }
