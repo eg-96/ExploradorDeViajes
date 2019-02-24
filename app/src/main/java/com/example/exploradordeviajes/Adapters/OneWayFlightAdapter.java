@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.exploradordeviajes.R;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
 
 public class OneWayFlightAdapter extends RecyclerView.Adapter<OneWayFlightAdapter.OneWayFlightViewHolder> {
     private QuerySnapshot mDataset;
@@ -16,11 +19,19 @@ public class OneWayFlightAdapter extends RecyclerView.Adapter<OneWayFlightAdapte
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class OneWayFlightViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView destinationCodeFly1;
+        public TextView departureTimeFly;
+        public TextView departureCodeFly;
+        public TextView destinationTimeFly;
+        public TextView destinationCodeFly;
+        public TextView airline;
+
         public OneWayFlightViewHolder(ConstraintLayout v) {
             super(v);
-            destinationCodeFly1 = v.findViewById(R.id.destinationCodeFly1);
+            departureTimeFly = v.findViewById(R.id.departureTimeFly);
+            departureCodeFly = v.findViewById(R.id.departureCodeFly);
+            destinationTimeFly = v.findViewById(R.id.destinationTimeFly);
+            destinationCodeFly = v.findViewById(R.id.destinationCodeFly);
+            airline = v.findViewById(R.id.airline);
         }
     }
 
@@ -31,8 +42,7 @@ public class OneWayFlightAdapter extends RecyclerView.Adapter<OneWayFlightAdapte
 
     // Create new views (invoked by the layout manager)
     @Override
-    public OneWayFlightAdapter.OneWayFlightViewHolder onCreateViewHolder(ViewGroup parent,
-                                                               int viewType) {
+    public OneWayFlightAdapter.OneWayFlightViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_flight, parent, false);
@@ -44,9 +54,19 @@ public class OneWayFlightAdapter extends RecyclerView.Adapter<OneWayFlightAdapte
          // Replace the contents of a view (invoked by the layout manager)
         @Override
         public void onBindViewHolder(OneWayFlightViewHolder holder, int position) {
-            // - get element from your dataset at this position
-            // - replace the contents of the view with that element
-            holder.destinationCodeFly1.setText(mDataset.getDocuments().get(position).get("DestinationCity").toString());
+            SimpleDateFormat timeFlyFormat = new SimpleDateFormat("HH:mm");
+
+            String departureTimeFly = timeFlyFormat.format(((Timestamp)mDataset.getDocuments().get(position).get("DepartureDateTime")).getSeconds());
+            holder.departureTimeFly.setText(departureTimeFly);
+
+            holder.departureCodeFly.setText(mDataset.getDocuments().get(position).get("DepartureCity").toString());
+
+            String destinationTimeFly = timeFlyFormat.format(((Timestamp)mDataset.getDocuments().get(position).get("DestinationDateTime")).getSeconds());
+            holder.destinationTimeFly.setText(destinationTimeFly);
+
+            holder.destinationCodeFly.setText(mDataset.getDocuments().get(position).get("DestinationCity").toString());
+
+            holder.airline.setText(mDataset.getDocuments().get(position).get("Airline").toString());
 
     }
 
