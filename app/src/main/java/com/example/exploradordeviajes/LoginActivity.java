@@ -37,6 +37,7 @@ import com.example.exploradordeviajes.Helpers.ErrorsUtils;
 import com.example.exploradordeviajes.Helpers.SuccessUtils;
 import com.example.exploradordeviajes.Modelos.Users;
 import com.example.exploradordeviajes.apis.ApiUtils;
+import com.example.exploradordeviajes.apis.LoginService;
 import com.example.exploradordeviajes.apis.RegisterService;
 import com.example.exploradordeviajes.apis.RetroFitClient;
 
@@ -61,7 +62,7 @@ public class LoginActivity extends AppCompatActivity  {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private RegisterService registerService;
+    private LoginService loginActivity;
     private static final String TAG = "Login activity";
 
     @Override
@@ -73,7 +74,7 @@ public class LoginActivity extends AppCompatActivity  {
         final EditText mPasswordView = (EditText) findViewById(R.id.password);
         Button submitBtn = (Button) findViewById(R.id.email_sign_in_button);
 
-        registerService = ApiUtils.getAPIService();
+        loginActivity = ApiUtils.getAPIServiceActivity();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +93,7 @@ public class LoginActivity extends AppCompatActivity  {
     public void loginUser(Users user) {
 
         // asynchronously sends the request and notifies
-        registerService.loginUser(user).enqueue(new Callback<ResponseBody>() {
+        loginActivity.loginUser(user).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call call, Response response) {
 

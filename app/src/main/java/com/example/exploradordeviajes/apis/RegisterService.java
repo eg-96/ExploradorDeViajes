@@ -27,7 +27,6 @@ public interface RegisterService {
 //                             @Field("password") String password);
 
 //   THIS WAY CAN BE USED ONLY IN A POST OR PUT
-    Call<Users> registerUser(@Body Users user);
-    @POST("/api/login")
-    Call<ResponseBody> loginUser(@Body Users user);
+    Call<ResponseBody> registerUser(@Body Users user);
+
 }

@@ -11,7 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.exploradordeviajes.Helpers.ApiError;
+import com.example.exploradordeviajes.Helpers.ApiSuccess;
 import com.example.exploradordeviajes.Helpers.ErrorsUtils;
+import com.example.exploradordeviajes.Helpers.SuccessUtils;
 import com.example.exploradordeviajes.Modelos.Users;
 import com.example.exploradordeviajes.apis.ApiUtils;
 import com.example.exploradordeviajes.apis.RegisterService;
@@ -57,13 +59,14 @@ public class Register extends AppCompatActivity {
     public void registerUser(Users user) {
 
         // asynchronously sends the request and notifies
-        registerService.registerUser(user).enqueue(new Callback<Users>() {
+        registerService.registerUser(user).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call call, Response response) {
 
                 if(response.isSuccessful()) {
-                    showResponse(response.body());
-                    Toast.makeText(getApplicationContext(),"This is my toast message",Toast.LENGTH_LONG).show();// Set your own toast  message
+                    ApiSuccess success = SuccessUtils.parserSuccess(response, RetroFitClient.getRetrofitInstance());
+                    Toast.makeText(getApplicationContext(),success.getToken(),Toast.LENGTH_LONG).show();// Set your own toast  message
+                    Toast.makeText(getApplicationContext(),success.getMessage(),Toast.LENGTH_LONG).show();// Set your own toast  message
                     Log.i(TAG, "post submitted to API." + response.body());
                 }else{
                     ApiError error = ErrorsUtils.parserError(response, RetroFitClient.getRetrofitInstance());
@@ -72,7 +75,7 @@ public class Register extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Users> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 showBadResponse(t);
                 Log.e(TAG, t.getMessage());
                 Log.e(TAG, "Unable to submit post to API.");

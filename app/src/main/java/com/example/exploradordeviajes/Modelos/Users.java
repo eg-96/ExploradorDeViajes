@@ -11,9 +11,12 @@ public class Users {
     @SerializedName("password")
     private String password;
 
+    private String token;
+
     public Users(String email, String password ){
         this.setEmail(email);
         this.setPassword(password);
+
     }
 
     public Users(){
@@ -34,6 +37,14 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setToken(String token){
+        this.token = token;
+    }
+
+    public String getToken(){
+        return token;
     }
 
     @Override
