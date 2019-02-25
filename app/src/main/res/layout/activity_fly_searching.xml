@@ -26,53 +26,17 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/departure"
+        android:id="@+id/returnLink2"
         android:layout_width="180dp"
         android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:background="#fff"
-        android:text="San José"
-        android:textAlignment="textStart"
-        android:textColor="#252033"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/onewWayLink" />
-
-    <TextView
-        android:id="@+id/departureDate"
-        android:layout_width="180dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:background="#fff"
-        android:text="Tue, Sep 10"
-        android:textColor="#252033"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/departure" />
-
-    <TextView
-        android:id="@+id/destination"
-        android:layout_width="180dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:background="#fff"
-        android:text="Guatemala"
+        android:enabled="false"
+        android:text="Return"
         android:textColor="#252033"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/onewWayLink" />
-
-    <TextView
-        android:id="@+id/destinationDate"
-        android:layout_width="180dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="#fff"
-        android:text="Mon, Sep 16"
-        android:textColor="#252033"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/destination" />
+        app:layout_constraintTop_toBottomOf="@+id/searchByDestination" />
 
     <TextView
         android:id="@+id/searchingSelected"
@@ -85,7 +49,7 @@
         android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/departureDate" />
+        app:layout_constraintTop_toBottomOf="@+id/dateInput" />
 
     <TextView
         android:id="@+id/filterLink"
@@ -98,7 +62,7 @@
         android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/destinationDate" />
+        app:layout_constraintTop_toBottomOf="@+id/returnLink2" />
 
     <TextView
         android:id="@+id/sortLink"
@@ -111,7 +75,7 @@
         android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toStartOf="@+id/filterLink"
-        app:layout_constraintTop_toBottomOf="@+id/destinationDate" />
+        app:layout_constraintTop_toBottomOf="@+id/returnLink2" />
 
     <View
         android:id="@+id/divider"
@@ -146,13 +110,13 @@
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <TextView
-        android:id="@+id/returnLink"
+        android:id="@+id/returnLink1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Return"
-        android:textColor="#3B344B"
+        android:textColor="#817B8F"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -165,9 +129,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="One Way"
-        android:textColor="#817B8F"
+        android:textColor="#3B344B"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/returnLink"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/returnLink1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
@@ -184,5 +149,34 @@
         tools:listitem="@layout/activity_flight">
 
     </android.support.v7.widget.RecyclerView>
+
+    <EditText
+        android:id="@+id/dateInput"
+        android:layout_width="181dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchByDeparture" />
+
+    <SearchView
+        android:id="@+id/searchByDeparture"
+        android:layout_width="180dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/returnLink1" />
+
+    <SearchView
+        android:id="@+id/searchByDestination"
+        android:layout_width="180dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/onewWayLink" />
 
 </android.support.constraint.ConstraintLayout>
