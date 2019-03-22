@@ -4,6 +4,8 @@ import com.example.exploradordeviajes.Modelos.Users;
 
 import java.util.List;
 
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -19,11 +21,12 @@ public interface RegisterService {
     // type (a header field that identifies the format of the body of an HTTP
     // request or response) set to application/x-www-form-urlencoded and also
     // that its field names and values will be UTF-8 encoded before being URI-encoded
-    @FormUrlEncoded
+//    @FormUrlEncoded
     //Wrap the response in a Call object with the type of the expected result//
-    Call<Users> registerUser(@Field("email") String email,
-                             @Field("password") String password);
+//    Call<Users> registerUser(@Field("email") String email,
+//                             @Field("password") String password);
 
 //   THIS WAY CAN BE USED ONLY IN A POST OR PUT
-//    Call<Users> registerUser(@Body Users user);
+    Call<ResponseBody> registerUser(@Body Users user);
+
 }

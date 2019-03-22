@@ -1,10 +1,31 @@
 package com.example.exploradordeviajes;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.app.LoaderManager.LoaderCallbacks;
+
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
+
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,57 +37,69 @@ import com.example.exploradordeviajes.Helpers.ErrorsUtils;
 import com.example.exploradordeviajes.Helpers.SuccessUtils;
 import com.example.exploradordeviajes.Modelos.Users;
 import com.example.exploradordeviajes.apis.ApiUtils;
+import com.example.exploradordeviajes.apis.LoginService;
 import com.example.exploradordeviajes.apis.RegisterService;
 import com.example.exploradordeviajes.apis.RetroFitClient;
 
-import java.io.IOException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.POST;
 
-public class Register extends AppCompatActivity {
-    private TextView mResponseTv;
-    private RegisterService registerService;
-    private static final String TAG = "Register activity";
+import static android.Manifest.permission.READ_CONTACTS;
+
+/**
+ * A login screen that offers login via email/password.
+ */
+public class LoginActivity extends AppCompatActivity  {
+
+    private AutoCompleteTextView mEmailView;
+    private EditText mPasswordView;
+    private View mProgressView;
+    private View mLoginFormView;
+    private LoginService loginActivity;
+    private static final String TAG = "Login activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
+        // Set up the login form.
+        final AutoCompleteTextView mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        final EditText mPasswordView = (EditText) findViewById(R.id.password);
+        Button submitBtn = (Button) findViewById(R.id.email_sign_in_button);
 
-        final EditText emailET = (EditText)findViewById(R.id.email);
-        final EditText passwordET = (EditText)findViewById(R.id.password);
-        Button submitBtn = (Button) findViewById(R.id.registrarse);
-
-        registerService = ApiUtils.getAPIService();
+        loginActivity = ApiUtils.getAPIServiceActivity();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = emailET.getText().toString().trim();
-                String password = passwordET.getText().toString().trim();
+                String email = mEmailView.getText().toString().trim();
+                String password = mPasswordView.getText().toString().trim();
                 if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     Users user = new Users(email,password);
-                    registerUser(user);
+                    loginUser(user);
                 }
             }
         });
+
     }
 
-    public void registerUser(Users user) {
+    public void loginUser(Users user) {
 
         // asynchronously sends the request and notifies
-        registerService.registerUser(user).enqueue(new Callback<ResponseBody>() {
+        loginActivity.loginUser(user).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call call, Response response) {
 
                 if(response.isSuccessful()) {
                     ApiSuccess success = SuccessUtils.parserSuccess(response, RetroFitClient.getRetrofitInstance());
-                    Toast.makeText(getApplicationContext(),success.getToken(),Toast.LENGTH_LONG).show();// Set your own toast  message
-                    Toast.makeText(getApplicationContext(),success.getMessage(),Toast.LENGTH_LONG).show();// Set your own toast  message
+                    Toast.makeText(getApplicationContext(),success.getMessage(),Toast.LENGTH_LONG).show();
                     Log.i(TAG, "post submitted to API." + response.body());
                 }else{
                     ApiError error = ErrorsUtils.parserError(response, RetroFitClient.getRetrofitInstance());
@@ -83,9 +116,9 @@ public class Register extends AppCompatActivity {
         });
     }
 
-    public void showResponse(Object response) {
+    public void showResponse(ApiSuccess response) {
         System.out.println("================ Response ==================");
-        System.out.println(response);
+        System.out.println(response.toString());
         System.out.println("==================================");
     }
     public void showBadResponse(Throwable response) {
@@ -94,4 +127,7 @@ public class Register extends AppCompatActivity {
         System.out.println("==================================");
     }
 
+
+
 }
+

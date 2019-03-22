@@ -1,31 +1,77 @@
 package com.example.exploradordeviajes.apis;
 
+import java.io.IOException;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetroFitClient {
+public class RetroFitClient extends Exception {
 
 
     private static Retrofit retrofit;
 
 //Define the base URL//
-
-
+public static final String BASE_URL = "https://exploradordeviajes.herokuapp.com/";
 //Create the Retrofit instance//
 
-    public static Retrofit getRetrofitInstance(String BASE_URL) {
+    public static Retrofit getRetrofitInstance() {
+        OkHttpClient okHttpClient = initOkHttpInterceptor();
         if (retrofit == null) {
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(BASE_URL)
-
-//Add the converter//
-
+                    .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
-
-//Build the Retrofit instance//
-
-                    .build();
+                    .build(); //Build the Retrofit instance//
         }
         return retrofit;
     }
+
+    public static OkHttpClient initOkHttpInterceptor() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request();
+
+                        Request.Builder newRequest = request.newBuilder().header("Authorization","access-token");
+
+                        return chain.proceed(newRequest.build());
+
+                    }
+                })
+                .addInterceptor(logging)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public okhttp3.Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request();
+                        okhttp3.Response response = chain.proceed(request);
+
+                        // todo deal with the issues the way you need to
+                        if (response.code() == 500) {
+                            return response;
+                        }
+                        if (response.code() == 400) {
+                            return response;
+                        }
+                        if (response.code() == 200) {
+                            return response;
+                        }
+
+                        return response;
+                    }
+                })
+                .build();
+
+        return okHttpClient;
+    }
+
 }

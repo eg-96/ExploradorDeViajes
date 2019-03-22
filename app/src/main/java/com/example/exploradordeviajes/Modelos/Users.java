@@ -6,16 +6,17 @@ import com.google.gson.annotations.SerializedName;
 public class Users {
 
     @SerializedName("email")
-    @Expose
     private String email;
 
     @SerializedName("password")
-    @Expose
     private String password;
+
+    private String token;
 
     public Users(String email, String password ){
         this.setEmail(email);
         this.setPassword(password);
+
     }
 
     public Users(){
@@ -38,9 +39,17 @@ public class Users {
         this.password = password;
     }
 
+    public void setToken(String token){
+        this.token = token;
+    }
+
+    public String getToken(){
+        return token;
+    }
+
     @Override
     public String toString() {
-        return "Post{" +
+        return "User{" +
                 "email='" + this.getEmail() + '\'' +
                 ", password='" + this.getPassword() + '\''+
                 '}';
