@@ -1,57 +1,24 @@
 package com.example.exploradordeviajes;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.content.pm.PackageManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.exploradordeviajes.Helpers.ApiError;
-import com.example.exploradordeviajes.Helpers.ApiSuccess;
-import com.example.exploradordeviajes.Helpers.ErrorsUtils;
-import com.example.exploradordeviajes.Helpers.SuccessUtils;
 import com.example.exploradordeviajes.Modelos.Users;
-import com.example.exploradordeviajes.apis.ApiUtils;
-import com.example.exploradordeviajes.apis.LoginService;
-import com.example.exploradordeviajes.apis.RegisterService;
-import com.example.exploradordeviajes.apis.RetroFitClient;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.Manifest.permission.READ_CONTACTS;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A login screen that offers login via email/password.
@@ -62,7 +29,6 @@ public class LoginActivity extends AppCompatActivity  {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private LoginService loginActivity;
     private static final String TAG = "Login activity";
 
     @Override
@@ -74,7 +40,6 @@ public class LoginActivity extends AppCompatActivity  {
         final EditText mPasswordView = (EditText) findViewById(R.id.password);
         Button submitBtn = (Button) findViewById(R.id.email_sign_in_button);
 
-        loginActivity = ApiUtils.getAPIServiceActivity();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,50 +48,33 @@ public class LoginActivity extends AppCompatActivity  {
                 String password = mPasswordView.getText().toString().trim();
                 if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     Users user = new Users(email,password);
-                    loginUser(user);
+                    login(user);
                 }
             }
         });
-
     }
 
-    public void loginUser(Users user) {
-
-        // asynchronously sends the request and notifies
-        loginActivity.loginUser(user).enqueue(new Callback<ResponseBody>() {
+    private void login(Users user){
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(user.getEmail(),user.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("UserAuth",0);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("email", user.getEmail());
+                    editor.apply();
 
-                if(response.isSuccessful()) {
-                    ApiSuccess success = SuccessUtils.parserSuccess(response, RetroFitClient.getRetrofitInstance());
-                    Toast.makeText(getApplicationContext(),success.getMessage(),Toast.LENGTH_LONG).show();
-                    Log.i(TAG, "post submitted to API." + response.body());
+                    Intent intent = new Intent(LoginActivity.this, Buscador.class);
+                    startActivity(intent);
                 }else{
-                    ApiError error = ErrorsUtils.parserError(response, RetroFitClient.getRetrofitInstance());
-                    Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();// Set your own toast  message
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                showBadResponse(t);
-                Log.e(TAG, t.getMessage());
-                Log.e(TAG, "Unable to submit post to API.");
+                    Toast.makeText(LoginActivity.this, "Hubo un error al iniciar iniciar sesión .",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
-
-    public void showResponse(ApiSuccess response) {
-        System.out.println("================ Response ==================");
-        System.out.println(response.toString());
-        System.out.println("==================================");
-    }
-    public void showBadResponse(Throwable response) {
-        System.out.println("================BAD Response ==================");
-        System.out.println(response);
-        System.out.println("==================================");
-    }
-
 
 
 }
