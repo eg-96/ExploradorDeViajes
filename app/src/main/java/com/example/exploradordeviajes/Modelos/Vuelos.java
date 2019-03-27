@@ -2,14 +2,16 @@ package com.example.exploradordeviajes.Modelos;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Base64;
 
-public class Vuelos {
+public class Vuelos implements Parcelable {
     private String nombre;
     private String salida;
     private Integer precio;
     private String image;
-    private Bitmap bitmapImage;
+
 
     public Vuelos(String nombre, String salida, Integer precio,String image) {
         this.nombre = nombre;
@@ -21,6 +23,30 @@ public class Vuelos {
     public Vuelos(){
 
     }
+
+    protected Vuelos(Parcel in) {
+        nombre = in.readString();
+        salida = in.readString();
+        if (in.readByte() == 0) {
+            precio = null;
+        } else {
+            precio = in.readInt();
+        }
+        image = in.readString();
+    }
+
+    public static final Creator<Vuelos> CREATOR = new Creator<Vuelos>() {
+        @Override
+        public Vuelos createFromParcel(Parcel in) {
+            return new Vuelos(in);
+        }
+
+        @Override
+        public Vuelos[] newArray(int size) {
+            return new Vuelos[size];
+        }
+    };
+
     public String getNombre() {
         return nombre;
     }
@@ -37,7 +63,7 @@ public class Vuelos {
         this.salida = salida;
     }
 
-    public Number getPrecio() {
+    public Integer getPrecio() {
         return precio;
     }
 
@@ -53,24 +79,24 @@ public class Vuelos {
         this.image = image;
     }
 
-    public Bitmap getBitmapImage() {
-        return this.bitmapImage;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setBitmapImage(Bitmap bitmapImage) {
-        this.bitmapImage = bitmapImage;
-    }
-
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte[] decodedString = Base64.decode(encodedString, Base64.URL_SAFE );
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            return decodedByte;
-        }catch(Exception e){
-            e.getMessage();
-            return null;
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(nombre);
+        parcel.writeString(salida);
+        if (precio == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(precio);
         }
-    }
+        parcel.writeString(image);
 
+    }
 }
 

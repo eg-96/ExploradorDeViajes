@@ -16,6 +16,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Viajes extends AppCompatActivity implements VuelosAdapter.OnVuelosLister {
@@ -64,11 +65,14 @@ public class Viajes extends AppCompatActivity implements VuelosAdapter.OnVuelosL
         mRecyclerView.setAdapter(mVuelosAdapter);
     }
 
+
     @Override
     public void onVueloClick(int position) {
-        vuelos.get(position);
+        Vuelos vuelo = vuelos.get(position);
         Intent intent = new Intent(this,  VisualizarViajes.class);
-//        intent.putExtra("card_place", vuelos.get(position));
+//        Bundle args = new Bundle();
+//        args.putSerializable("vuelo_select",(Serializable) vuelo);
+        intent.putExtra("vuelo", new Vuelos(vuelo.getNombre(),vuelo.getSalida(),vuelo.getPrecio(),vuelo.getImage()));
         startActivity(intent);
 
     }
