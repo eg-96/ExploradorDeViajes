@@ -1,6 +1,7 @@
 package com.example.exploradordeviajes;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,9 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,10 +36,12 @@ public class Buscador extends AppCompatActivity {
     private Location gps, network_loc, final_loc;
     private double lat;
     private double longitude;
+    final Calendar myCalendar = Calendar.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscador);
+        updateDateLabel();
         requestPermission();
 //        client = LocationServices.getFusedLocationProviderClient(this);
 
@@ -81,10 +88,20 @@ public class Buscador extends AppCompatActivity {
 //
             }
         });
+
+        TextView txtSalida = findViewById(R.id.txtLugarLlegada);
+        txtSalida.setText("Cualquier lugar");
         privateVisualizarViajes();
+        gettingDate();
     }
 
     private void privateVisualizarViajes(){
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("vuelo",0);
+        SharedPreferences.Editor editor = pref.edit();
+        TextView txtFechaSalida = findViewById(R.id.txtDate);
+        editor.putString("fechasalida",txtFechaSalida.getText().toString());
+        editor.apply();
+
         Button btn  = findViewById(R.id.search_button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +150,48 @@ public class Buscador extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
 
+    private void gettingDate(){
+        TextView textDate = findViewById(R.id.txtDate);
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        textDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(Buscador.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+    private void updateLabel() {
+        TextView textDate = findViewById(R.id.txtDate);
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        textDate.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    private void updateDateLabel(){
+        TextView textDate = findViewById(R.id.txtDate);
+        String myFormat = "dd/MMM/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        textDate.setText(sdf.format(myCalendar.getTime()));
     }
 }
