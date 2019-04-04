@@ -62,15 +62,19 @@ public class VisualizarViajes extends AppCompatActivity implements Serializable 
         saveTicket(ticket);
     }
 
-    private void saveTicket(final Ticket ticket){
+    private void saveTicket(Ticket ticket){
+        final Ticket tickett = ticket;
         Button btn = (Button) findViewById(R.id.btnCompra);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FirebaseFirestore.getInstance().collection("Compra").add(ticket).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    FirebaseFirestore.getInstance().collection("Compra").add(tickett).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Toast.makeText(VisualizarViajes.this,"Compra realizada",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(VisualizarViajes.this, Compra.class);
+                            startActivity(intent);
+                            finish();
                         }
                     });
                 }
