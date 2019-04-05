@@ -1,17 +1,22 @@
 package com.example.exploradordeviajes.Adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.exploradordeviajes.Modelos.Ticket;
 import com.example.exploradordeviajes.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class TickerAdapter extends PagerAdapter {
     private Context context;
@@ -53,7 +58,19 @@ public class TickerAdapter extends PagerAdapter {
         txtBoleto.setText(tickets.get(position).getTipoBoleto());
         txtSalida.setText(tickets.get(position).getSalida());
 
+        ImageView imageContainer = view.findViewById(R.id.imageContainer);
+        System.out.println("==================IMAGE ===================");
+        System.out.println(tickets.get(position).getImage());
+        System.out.println("==================IMAGE ===================");
+        Picasso.get()
+                .load(tickets.get(position).getImage())
+                .fit()
+                .centerCrop()
+//                .transform(new BlurTransformation(context,25,1))
+                .into(imageContainer);
+
         container.addView(view);
+
 
         return view;
     }

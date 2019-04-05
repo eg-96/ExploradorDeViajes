@@ -39,6 +39,8 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:16.0.0"
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+    implementation 'jp.wasabeef:picasso-transformations:2.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -9,6 +9,18 @@ public class Ticket {
     private Integer cantTickets;
     private String FechaViaje;
     private String tipoBoleto;
+    private String image;
+
+    public Ticket(String salida, String llegada, Integer precio, String email, Integer cantTickets, String fechaViaje, String tipoBoleto, String image) {
+        this.salida = salida;
+        this.llegada = llegada;
+        this.precio = precio;
+        this.email = email;
+        this.cantTickets = cantTickets;
+        FechaViaje = fechaViaje;
+        this.tipoBoleto = tipoBoleto;
+        this.image = image;
+    }
 
     public Ticket(String salida, String llegada, Integer precio, String email, Integer cantTickets, String fechaViaje, String tipoBoleto) {
         this.salida = salida;
@@ -78,5 +90,13 @@ public class Ticket {
 
     public void setTipoBoleto(String tipoBoleto) {
         this.tipoBoleto = tipoBoleto;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

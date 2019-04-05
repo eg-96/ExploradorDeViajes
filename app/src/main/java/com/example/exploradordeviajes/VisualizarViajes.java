@@ -58,7 +58,7 @@ public class VisualizarViajes extends AppCompatActivity implements Serializable 
         TextView fecha = findViewById(R.id.txtFechaSalida);
         fecha.setText(fechaDe);
 
-        ticket = new Ticket(salidaDe,vuelo.getNombre(),vuelo.getPrecio(),userEmail,1,fechaDe,"Económico");
+        ticket = new Ticket(salidaDe,vuelo.getNombre(),vuelo.getPrecio(),userEmail,1,fechaDe,"Económico",vuelo.getImage());
         saveTicket(ticket);
     }
 

@@ -138,7 +138,9 @@ public class Buscador extends AppCompatActivity {
 
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("vuelo",0);
                 SharedPreferences.Editor editor = pref.edit();
-
+                if (state.contains("San José")){
+                    state = "San José";
+                }
                 editor.putString("salidade",state);
                 editor.apply();
 
