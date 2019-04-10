@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "51644044501",
+    "firebase_url": "https://searching-travels.firebaseio.com",
+    "project_id": "searching-travels",
+    "storage_bucket": "searching-travels.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51644044501:android:5939dedf5b15a78e",
+        "android_client_info": {
+          "package_name": "com.example.exploradordeviajes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51644044501-utvtgtpsfd66hussedaobd8easj2694q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.exploradordeviajes",
+            "certificate_hash": "f8af7cb979d8befc278d571511074efc6452538f"
+          }
+        },
+        {
+          "client_id": "51644044501-u5l0fdvuj3a5isurs2ln76bdma4t3nu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCptAXtIjVN9WlG42VKfQf8zQGc-SxPOL8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51644044501-u5l0fdvuj3a5isurs2ln76bdma4t3nu1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
