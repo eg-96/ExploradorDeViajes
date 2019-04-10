@@ -7,6 +7,12 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGreen">#089000</color>
     <color name="colorGray">#d4d4d4</color>
+    <color name="color1">#424549</color>
+    <color name="color2">#7e455e</color>
+    <color name="color3">#796e25</color>
+    <color name="color4">#38e982</color>
+    <color name="color5">#59717c</color>
+    <color name="background">#dddddd</color>
 
 
 </resources>
